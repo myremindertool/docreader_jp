@@ -6,9 +6,9 @@ import pdfplumber
 import os
 
 # ------------------ Configuration ------------------ #
-st.set_page_config(page_title="GPT-4 Document Extractor", layout="centered")
-st.title("📄 GPT-4 Document Extractor")
-st.markdown("Upload a document and ask GPT-4 to extract anything you want.")
+st.set_page_config(page_title="GPT Document Extractor", layout="centered")
+st.title("📄 GPT Document Extractor")
+st.markdown("Upload a document and ask GPT to extract anything you want.")
 
 # ------------------ OpenAI API Key ------------------ #
 openai_api_key = st.text_input("🔑 Enter your OpenAI API Key", type="password")
@@ -35,7 +35,7 @@ def ask_gpt(prompt, content):
     full_prompt = f"{prompt}\n\nDocument:\n{content[:7000]}"  # Limit for token safety
     try:
         response = client.chat.completions.create(
-            model="gpt-4",
+            model="gpt-3.5-turbo",
             messages=[{"role": "user", "content": full_prompt}],
             temperature=0.2,
             max_tokens=1000
@@ -59,8 +59,8 @@ if uploaded_file and custom_prompt and openai_api_key:
 
     if file_text:
         st.success("✅ File read successfully. Ready to extract.")
-        if st.button("🚀 Run GPT-4 Extraction"):
-            with st.spinner("💬 Talking to GPT-4..."):
+        if st.button("🚀 Run GPT Extraction"):
+            with st.spinner("💬 Talking to GPT..."):
                 result = ask_gpt(custom_prompt, file_text)
                 st.markdown("### ✅ Extracted Information")
                 st.write(result)
